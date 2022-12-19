@@ -7,7 +7,7 @@ import zipfile
 import pandas as pd
 
 from malcheck_parser.config import BASE_DIR, UPLOAD_DIR, EXTRACT_DIR, REPORT_DIR, REPORT_NAME
-from malcheck_parser.config import REPORT_SPLUNK, REPORT_HASHES, REPORT_GENERAL, REPORT_CSV
+from malcheck_parser.config import REPORT_SPLUNK, REPORT_HASHES, REPORT_GENERAL, REPORT_CSV, BATCH_SIZE
 
 
 def initial_dirs():
@@ -61,23 +61,25 @@ def get_list_dir(path):
         print(f"get_list_dir - {ex}")
 
 
-def save_general_report(dict_data, file_name):
+def save_general_report(dict_data, file_name, split=False):
     try:
-        file_path = os.path.join(REPORT_GENERAL, file_name)
-        with open(file_path, "w", encoding="utf-8") as fs:
-            json.dump(dict_data, fs)
+        if split is True:
+            counter = 1
+            for i in range(0, len(dict_data), BATCH_SIZE):
+                batch_data = dict_data[i:i + BATCH_SIZE]
+                temp_name = f"{file_name}-general-{str(counter)}.json"
+                counter += 1
+                file_path = os.path.join(REPORT_GENERAL, temp_name)
+                with open(file_path, "w", encoding="utf-8") as fs:
+                    json.dump(batch_data, fs)
+                time.sleep(1)
+        else:
+            temp_name = f"{file_name}-general.json"
+            file_path = os.path.join(REPORT_GENERAL, temp_name)
+            with open(file_path, "w", encoding="utf-8") as fs:
+                json.dump(dict_data, fs)
     except Exception as ex:
         print(f"save_general_report - {ex}")
-
-
-def save_splunk_report(dict_data, file_name):
-    try:
-        file_path = os.path.join(REPORT_SPLUNK, file_name)
-        with open(file_path, "w", encoding="utf-8") as fs:
-            for line in dict_data:
-                fs.write(f"{line}\n")
-    except Exception as ex:
-        print(f"save_splunk_report - {ex}")
 
 
 def convert_json_to_csv():

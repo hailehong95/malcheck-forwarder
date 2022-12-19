@@ -27,6 +27,8 @@ GENERAL_NETWORK_REPORT = "total-network"
 GENERAL_SYSINFO_REPORT = "total-sysinfo"
 GENERAL_LAST_ACTIVITY_REPORT = "total-last-activity"
 
+BATCH_SIZE = 100000
+
 REPORT_NAME = {
     'mac_address': 'mac.json',
     'network': 'net.json',
