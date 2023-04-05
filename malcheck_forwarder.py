@@ -49,7 +49,7 @@ def forward_addon_logs():
         payloads = load_json_report(json_path)
         splunk_res = splunk_fwd.send_data(payloads)
     except Exception as ex:
-        print(f"forward_sysinfo_logs - {ex}")
+        print(f"forward_addon_logs - {ex}")
 
 
 def forward_network_logs():
@@ -61,7 +61,7 @@ def forward_network_logs():
         payloads = load_json_report(json_path)
         splunk_res = splunk_fwd.send_data(payloads)
     except Exception as ex:
-        print(f"forward_sysinfo_logs - {ex}")
+        print(f"forward_network_logs - {ex}")
 
 
 def forward_autorun_logs():
@@ -73,7 +73,7 @@ def forward_autorun_logs():
         payloads = load_json_report(json_path)
         splunk_res = splunk_fwd.send_data(payloads)
     except Exception as ex:
-        print(f"forward_sysinfo_logs - {ex}")
+        print(f"forward_autorun_logs - {ex}")
 
 
 def forward_process_logs():
@@ -85,7 +85,7 @@ def forward_process_logs():
         payloads = load_json_report(json_path)
         splunk_res = splunk_fwd.send_data(payloads)
     except Exception as ex:
-        print(f"forward_sysinfo_logs - {ex}")
+        print(f"forward_process_logs - {ex}")
 
 
 def forward_powershell_logs():
@@ -97,7 +97,7 @@ def forward_powershell_logs():
         payloads = load_json_report(json_path)
         splunk_res = splunk_fwd.send_data(payloads)
     except Exception as ex:
-        print(f"forward_sysinfo_logs - {ex}")
+        print(f"forward_powershell_logs - {ex}")
 
 
 def forward_files_logs():
@@ -109,7 +109,7 @@ def forward_files_logs():
         payloads = load_json_report(json_path)
         splunk_res = splunk_fwd.send_data(payloads)
     except Exception as ex:
-        print(f"forward_sysinfo_logs - {ex}")
+        print(f"forward_files_logs - {ex}")
 
 
 def main():

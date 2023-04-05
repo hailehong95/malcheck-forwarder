@@ -17,11 +17,9 @@ def sysinfo_task(dirs):
                 sysinfo_data = load_json_file(sysinfo_file)
             else:
                 continue
-            sysinfo_data["employee_id"] = dir_name.split("_")[0]
-            sysinfo_data["employee_name"] = dir_name.split("_")[1]
-            sysinfo_data["mac_address"] = mac_address_extract(dir_name)
-            sysinfo_data["ip_address"] = ip_address_extract(dir_name)
-            total_sysinfo_data.append(standardized_keys(sysinfo_data))
+            sysinfo_data[0]["employee_id"] = dir_name.split("_")[1]
+            sysinfo_data[0]["employee_name"] = dir_name.split("_")[2]
+            total_sysinfo_data.append(sysinfo_data[0])
         except Exception as ex:
             print(f"sysinfo_task - {dir_name} - {ex}")
     return total_sysinfo_data
@@ -37,9 +35,9 @@ def autorun_task(dirs):
             else:
                 continue
             for item in autorun_data:
-                item["employee_id"] = dir_name.split("_")[0]
-                item["employee_name"] = dir_name.split("_")[1]
-                total_autorun_data.append(standardized_keys(item))
+                item["employee_id"] = dir_name.split("_")[1]
+                item["employee_name"] = dir_name.split("_")[2]
+                total_autorun_data.append(item)
         except Exception as ex:
             print(f"autorun_task - {dir_name} - {ex}")
     return total_autorun_data
@@ -55,9 +53,9 @@ def file_task(dirs):
             else:
                 continue
             for item in files_data:
-                item["employee_id"] = dir_name.split("_")[0]
-                item["employee_name"] = dir_name.split("_")[1]
-                total_file_data.append(standardized_keys(item))
+                item["employee_id"] = dir_name.split("_")[1]
+                item["employee_name"] = dir_name.split("_")[2]
+                total_file_data.append(item)
         except Exception as ex:
             print(f"file_task - {dir_name} - {ex}")
     return total_file_data
@@ -73,9 +71,9 @@ def process_task(dirs):
             else:
                 continue
             for item in process_data:
-                item["employee_id"] = dir_name.split("_")[0]
-                item["employee_name"] = dir_name.split("_")[1]
-                total_process_data.append(standardized_keys(item))
+                item["employee_id"] = dir_name.split("_")[1]
+                item["employee_name"] = dir_name.split("_")[2]
+                total_process_data.append(item)
         except Exception as ex:
             print(f"process_task - {dir_name} - {ex}")
     return total_process_data
@@ -91,25 +89,12 @@ def network_task(dirs):
             else:
                 continue
             for item in network_data:
-                item["employee_id"] = dir_name.split("_")[0]
-                item["employee_name"] = dir_name.split("_")[1]
-                total_network_data.append(standardized_keys(item))
+                item["employee_id"] = dir_name.split("_")[1]
+                item["employee_name"] = dir_name.split("_")[2]
+                total_network_data.append(item)
         except Exception as ex:
             print(f"network_task - {dir_name} - {ex}")
     return total_network_data
-
-
-def extract_ps_message(ps_message):
-    for x in ps_message.split("\r\n\t"):
-        if x.startswith("HostApplication"):
-            return x.replace("HostApplication=", "")
-    return ""
-
-
-def extract_ps_time(ps_time):
-    dt = re.findall(r'[0-9]+', ps_time)[0]
-    start_date = datetime(1970, 1, 1)
-    return (start_date + timedelta(milliseconds=int(dt))).strftime("%Y-%m-%d %H:%M:%S")
 
 
 def powershell_task(dirs):
@@ -122,16 +107,9 @@ def powershell_task(dirs):
             else:
                 continue
             for item in ps_log_data:
-                temp = dict()
-                temp["employee_id"] = dir_name.split("_")[0]
-                temp["employee_name"] = dir_name.split("_")[1]
-                temp["event_id"] = item["Id"]
-                temp["time_created"] = extract_ps_time(item["TimeCreated"])
-                temp["log_name"] = item["LogName"]
-                temp["process_id"] = item["ProcessId"]
-                temp["level_display_Name"] = item["LevelDisplayName"]
-                temp["message"] = extract_ps_message(item["Message"])
-                total_ps_log_data.append(standardized_keys(temp))
+                item["employee_id"] = dir_name.split("_")[1]
+                item["employee_name"] = dir_name.split("_")[2]
+                total_ps_log_data.append(item)
         except Exception as ex:
             print(f"powershell_task - {dir_name} - {ex}")
     return total_ps_log_data
@@ -147,9 +125,9 @@ def last_activity_task(dirs):
             else:
                 continue
             for item in last_activity_data:
-                item["employee_id"] = dir_name.split("_")[0]
-                item["employee_name"] = dir_name.split("_")[1]
-                total_last_activity_data.append(standardized_keys(item))
+                item["employee_id"] = dir_name.split("_")[1]
+                item["employee_name"] = dir_name.split("_")[2]
+                total_last_activity_data.append(item)
         except Exception as ex:
             print(f"last_activity_task - {dir_name} - {ex}")
     return total_last_activity_data
@@ -165,9 +143,9 @@ def addons_task(dirs):
             else:
                 continue
             for item in addons_data:
-                item["employee_id"] = dir_name.split("_")[0]
-                item["employee_name"] = dir_name.split("_")[1]
-                total_addons_data.append(standardized_keys(item))
+                item["employee_id"] = dir_name.split("_")[1]
+                item["employee_name"] = dir_name.split("_")[2]
+                total_addons_data.append(item)
         except Exception as ex:
             print(f"addons_task - {dir_name} - {ex}")
     return total_addons_data
@@ -186,12 +164,12 @@ def hashes_extract():
         for fn in file_data:
             temp = load_json_file(os.path.join(REPORT_GENERAL, fn))
             for hs in temp:
-                if hash_validator(hs["md5"]):
-                    md5_hashes.append(hs["md5"])
-                if hash_validator(hs["sha1"]):
-                    sha1_hashes.append(hs["sha1"])
-                if hash_validator(hs["sha256"]):
-                    sha256_hashes.append(hs["sha256"])
+                if hash_validator(hs.get("md5")):
+                    md5_hashes.append(hs.get("md5"))
+                if hash_validator(hs.get("sha1")):
+                    sha1_hashes.append(hs.get("sha1"))
+                if hash_validator(hs.get("sha256")):
+                    sha256_hashes.append(hs.get("sha256"))
         md5_hashes = list(set(md5_hashes))
         sha1_hashes = list(set(sha1_hashes))
         sha256_hashes = list(set(sha256_hashes))

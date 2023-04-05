@@ -30,13 +30,13 @@ GENERAL_LAST_ACTIVITY_REPORT = "total-last-activity"
 BATCH_SIZE = 100000
 
 REPORT_NAME = {
-    'mac_address': 'mac.json',
-    'network': 'net.json',
-    'sysinfo': 'info.json',
-    'process': 'proc.json',
-    'files': 'files.json',
-    'powershell_log': 'pslogs.json',
-    'browser_addons': 'addons.json',
+    'last_activity': 'activity.json',
+    'browser_addons': 'addon.json',
     'autorun': 'autorun.json',
-    'last_activity': 'lastactivity.json'
+    'files': 'files.json',
+    'network': 'network.json',
+    'powershell_log': 'powershell.json',
+    'process': 'process.json',
+    'sysinfo': 'sysinfo.json'
+
 }

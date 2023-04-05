@@ -10,6 +10,7 @@ from malcheck_parser.merge import addons_task, last_activity_task, powershell_ta
 
 
 def main():
+
     initial_dirs()
     unzip_multi_file(get_list_dir(UPLOAD_DIR))
     dirs = get_list_dir(EXTRACT_DIR)
@@ -46,7 +47,7 @@ def main():
     print(f"[*] Total addon data = {str(len(total_addons_data))}")
     save_general_report(total_addons_data, GENERAL_ADDON_REPORT)
 
-    convert_json_to_csv()
+    # convert_json_to_csv()
     save_hashes_task()
 
 
